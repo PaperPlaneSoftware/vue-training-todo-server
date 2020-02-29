@@ -12,7 +12,7 @@ object Main extends IOApp {
     val httpApp = Router("/kanban" -> kanban.routes[IO]).orNotFound
 
     BlazeServerBuilder[IO]
-      .bindHttp(8080, "localhost")
+      .bindHttp(5000, "0.0.0.0")
       .withHttpApp(httpApp)
       .serve
       .compile
