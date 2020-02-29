@@ -18,8 +18,10 @@ lazy val root = (project in file("."))
       "org.http4s" %% "http4s-circe" % Http4sVersion,
       "org.http4s" %% "http4s-dsl" % Http4sVersion,
       "io.circe" %% "circe-generic" % CirceVersion,
-      "org.specs2" %% "specs2-core" % Specs2Version % "test",
-      "ch.qos.logback" % "logback-classic" % LogbackVersion
+      "org.postgresql" % "postgresql" % "42.2.8",
+      "io.getquill" %% "quill-jdbc" % "3.5.0",
+      "ch.qos.logback" % "logback-classic" % LogbackVersion,
+      "org.specs2" %% "specs2-core" % Specs2Version % "test"
     ),
     addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.10.3"),
     addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.0")
