@@ -70,6 +70,9 @@ object Todo {
     def insert(todo: Todo): Todo =
       ctx.run(query[Todo].insert(lift(todo)).returning(todo => todo))
 
+    def update(todo: Todo): Unit =
+      ctx.run(query[Todo].update(lift(todo)))
+
     def delete(id: Int): Unit =
       ctx.run(quote(query[Todo].filter(_.id == lift(Option(id))).delete))
   }
@@ -87,13 +90,19 @@ object Todo {
         case GET -> Root / IntVar(id) => Ok(Services.get(id).asJson)
         case GET -> Root / "page" / IntVar(page) :? SearchQP(search) =>
           Ok(Services.getPage(page, search).asJson)
-        case DELETE -> Root / IntVar(id) => Ok(Services.delete(id))
         case req @ POST -> Root =>
           for {
             todo <- req.as[Todo]
             _    <- cats.effect.IO.pure(Services.insert(todo))
             res  <- Ok()
           } yield (res)
+        case req @ PUT -> Root =>
+          for {
+            todo <- req.as[Todo]
+            _    <- cats.effect.IO.pure(Services.update(todo))
+            res  <- Ok()
+          } yield (res)
+        case DELETE -> Root / IntVar(id) => Ok(Services.delete(id))
       }
   }
 }
