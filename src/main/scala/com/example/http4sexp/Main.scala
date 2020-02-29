@@ -11,8 +11,10 @@ object Main extends IOApp {
   def run(args: List[String]) = {
     val httpApp = Router("/kanban" -> kanban.routes[IO]).orNotFound
 
+    val port = sys.env.getOrElse("PORT", "5000").toInt
+
     BlazeServerBuilder[IO]
-      .bindHttp(5000, "0.0.0.0")
+      .bindHttp(port, "0.0.0.0")
       .withHttpApp(httpApp)
       .serve
       .compile
