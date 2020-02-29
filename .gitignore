@@ -1,3 +1,4 @@
 **/.bloop/
 .metals/
-**/target/
+target/
+project/boot
