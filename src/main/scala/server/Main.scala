@@ -1,4 +1,4 @@
-package com.example.http4sexp
+package server
 
 import com.typesafe.config.{Config, ConfigFactory}
 import cats.effect._

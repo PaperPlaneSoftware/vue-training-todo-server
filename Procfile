@@ -1,1 +1,1 @@
-web target/universal/stage/bin/http4s-exp
+web target/universal/stage/bin/vue-training-todo-server

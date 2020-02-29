@@ -1,4 +1,4 @@
-package com.example.http4sexp
+package server
 
 import cats.effect._
 import io.circe.syntax._
