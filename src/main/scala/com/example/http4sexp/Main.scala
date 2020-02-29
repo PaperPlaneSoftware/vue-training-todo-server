@@ -20,10 +20,10 @@ object Main extends IOApp {
 
   def run(args: List[String]) = {
     val config = ConfigFactory.load()
-    val port = config.getInt("app.port")
-    val host = config.getString("app.host")
+    val port   = config.getInt("app.port")
+    val host   = config.getString("app.host")
 
-    val httpApp = Router("/" -> Todo.routes[IO]).orNotFound
+    val httpApp = Router("/todo" -> Todo.routes()).orNotFound
 
     BlazeServerBuilder[IO]
       .bindHttp(port, host)
