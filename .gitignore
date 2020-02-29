@@ -1,4 +1,5 @@
-**/.bloop/
+.bloop/
 .metals/
 target/
 project/boot
+secrets.conf
