@@ -1,5 +1,6 @@
 package com.example.http4sexp
 
+import com.typesafe.config.{Config, ConfigFactory}
 import cats.effect._
 import cats.implicits._
 import org.http4s.server.blaze._
@@ -9,12 +10,14 @@ import scala.concurrent.ExecutionContext.global
 
 object Main extends IOApp {
   def run(args: List[String]) = {
+    val config = ConfigFactory.load()
+    val port = config.getInt("app.port")
+    val host = config.getString("app.host")
+
     val httpApp = Router("/kanban" -> kanban.routes[IO]).orNotFound
 
-    val port = sys.env.getOrElse("PORT", "5000").toInt
-
     BlazeServerBuilder[IO]
-      .bindHttp(port, "0.0.0.0")
+      .bindHttp(port, host)
       .withHttpApp(httpApp)
       .serve
       .compile

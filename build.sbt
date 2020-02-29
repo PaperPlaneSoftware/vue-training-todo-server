@@ -12,6 +12,7 @@ lazy val root = (project in file("."))
     version := "0.0.1-SNAPSHOT",
     scalaVersion := "2.12.10",
     libraryDependencies ++= Seq(
+      "com.typesafe" % "config" % "1.4.0",
       "org.http4s" %% "http4s-blaze-server" % Http4sVersion,
       "org.http4s" %% "http4s-blaze-client" % Http4sVersion,
       "org.http4s" %% "http4s-circe" % Http4sVersion,
@@ -33,4 +34,8 @@ scalacOptions ++= Seq(
   "-feature",
   "-Ypartial-unification",
   "-Xfatal-warnings"
+)
+
+javaOptions ++= Seq(
+  "-Dconfig.resource=application.dev.conf"
 )
