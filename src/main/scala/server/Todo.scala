@@ -91,7 +91,7 @@ object Todo {
         case GET -> Root / "page" / IntVar(page) :? SearchQP(search) =>
           Ok(Services.getPage(page, search).asJson)
 
-        case req @ PUT -> Root =>
+        case req @ POST -> Root / "update" =>
           logger.info("UPDSATING")
           for {
             todo <- req.as[Todo]
@@ -105,6 +105,7 @@ object Todo {
             _    <- cats.effect.IO.pure(Services.insert(todo))
             res  <- Ok()
           } yield (res)
+
         case DELETE -> Root / IntVar(id) => Ok(Services.delete(id))
       }
   }
