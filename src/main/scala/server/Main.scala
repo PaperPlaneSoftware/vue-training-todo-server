@@ -26,7 +26,7 @@ object Main extends IOApp {
 
     val todoController = CORS(Todo.routes())
 
-    val httpApp = Router("/todo" -> Todo.routes()).orNotFound
+    val httpApp = Router("/todo" -> todoController).orNotFound
 
     BlazeServerBuilder[IO]
       .bindHttp(port, host)
