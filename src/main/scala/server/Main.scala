@@ -5,6 +5,7 @@ import cats.effect._
 import cats.implicits._
 import io.getquill._
 import org.http4s.server.blaze._
+import org.http4s.server.middleware._
 import org.http4s.server.Router
 import org.http4s.implicits._
 import scala.concurrent.ExecutionContext.global
@@ -22,6 +23,8 @@ object Main extends IOApp {
     val config = ConfigFactory.load()
     val port   = config.getInt("app.port")
     val host   = config.getString("app.host")
+
+    val todoController = CORS(Todo.routes())
 
     val httpApp = Router("/todo" -> Todo.routes()).orNotFound
 
