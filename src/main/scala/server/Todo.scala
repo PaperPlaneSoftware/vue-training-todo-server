@@ -90,16 +90,19 @@ object Todo {
         case GET -> Root / IntVar(id) => Ok(Services.get(id).asJson)
         case GET -> Root / "page" / IntVar(page) :? SearchQP(search) =>
           Ok(Services.getPage(page, search).asJson)
+
+        case req @ PUT -> Root =>
+          logger.info("UPDSATING")
+          for {
+            todo <- req.as[Todo]
+            _    <- cats.effect.IO.pure(Services.update(todo))
+            res  <- Ok()
+          } yield (res)
+
         case req @ POST -> Root =>
           for {
             todo <- req.as[Todo]
             _    <- cats.effect.IO.pure(Services.insert(todo))
-            res  <- Ok()
-          } yield (res)
-        case req @ PUT -> Root =>
-          for {
-            todo <- req.as[Todo]
-            _    <- cats.effect.IO.pure(Services.update(todo))
             res  <- Ok()
           } yield (res)
         case DELETE -> Root / IntVar(id) => Ok(Services.delete(id))
