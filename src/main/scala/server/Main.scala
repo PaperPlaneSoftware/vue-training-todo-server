@@ -9,6 +9,7 @@ import org.http4s.server.middleware._
 import org.http4s.server.Router
 import org.http4s.implicits._
 import scala.concurrent.ExecutionContext.global
+import scala.concurrent.duration._
 
 object Db {
   object Implicits {
@@ -31,7 +32,8 @@ object Main extends IOApp {
       allowCredentials = true,
       maxAge = 1.day.toSeconds
     )
-    val todoController = CORS(Todo.routes())
+
+    val todoController = CORS(Todo.routes(), methodConfig)
 
     val httpApp = Router("/todo" -> todoController).orNotFound
 
