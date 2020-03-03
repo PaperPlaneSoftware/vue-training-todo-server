@@ -24,6 +24,13 @@ object Main extends IOApp {
     val port   = config.getInt("app.port")
     val host   = config.getString("app.host")
 
+    val methodConfig = CORSConfig(
+      anyOrigin = true,
+      anyMethod = true,
+      allowedMethods = Some(Set("GET", "POST", "DELETE", "PUT")),
+      allowCredentials = true,
+      maxAge = 1.day.toSeconds
+    )
     val todoController = CORS(Todo.routes())
 
     val httpApp = Router("/todo" -> todoController).orNotFound
